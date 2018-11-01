@@ -1,0 +1,42 @@
+Automation_Core > ElementRepository.java
+
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+public class ElementRepository {
+	 Properties prop;
+	 String propertyfilename;
+	 String elementPath;
+	public ElementRepository(String filepath) {
+		this.propertyfilename = filepath;
+	}
+	public  String getPropertyByTag (String tagName) {
+		this.elementPath = tagName;
+		try {
+			prop = new Properties();
+			//System.out.println(System.getProperty("user.dir") + "/" + "config/locator.properties");
+			/*FileInputStream ip = new FileInputStream(
+					System.getProperty("user.dir") + "/" + "config/locator.properties");
+					*/
+			FileInputStream ip = new FileInputStream(this.propertyfilename);
+			prop.load(ip);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return prop.getProperty(this.elementPath);
+	}
+}
+
+***********************************
+
+build >
+
+mvn clean
+mvn install
